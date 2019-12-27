@@ -31,4 +31,4 @@ class BaiduHotspotSpider(scrapy.Spider):
             yield item
 
     def close(spider, reason):
-        print('+' * 50, '爬虫结束了')
+        print('+' * 50, '没想好要干点啥。。。')

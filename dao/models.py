@@ -17,6 +17,7 @@ class BaiduHot(Base):
                          comment='创建时间')
     link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
+    number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
 
 
 class WeiboHot(Base):
@@ -31,3 +32,5 @@ class WeiboHot(Base):
                          comment='创建时间')
     link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
+    number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
+
