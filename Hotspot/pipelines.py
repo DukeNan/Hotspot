@@ -77,7 +77,7 @@ class InfluxPipeline:
             },
             'fields': {
 
-                'value': item['value'],
+                'value': float(item['value']),
             }
         }
         self.json_body.append(temp)
