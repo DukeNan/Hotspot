@@ -5,12 +5,12 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-from dao import session
-from dao.models import BaiduHot, WeiboHot
-from Hotspot.items import BaiduItem, WeiboItem
 from sqlalchemy import func
-from influxdb import InfluxDBClient
-from scrapy.utils.project import get_project_settings
+
+from Hotspot.items import BaiduItem, WeiboItem
+from dao import session
+from dao.iinflux import client
+from dao.models import BaiduHot, WeiboHot
 
 
 class HotspotPipeline(object):
@@ -54,14 +54,7 @@ class HotspotPipeline(object):
 class InfluxPipeline:
     def __init__(self):
         self.json_body = []
-        self.settings = get_project_settings()
-        self.influx_client = InfluxDBClient(
-            host=self.settings['INFLUX_DB_HOST'],
-            port=self.settings['INFLUX_DB_PORT'],
-            username=self.settings['INFLUX_DB_USERNAME'],
-            password=self.settings['INFLUX_DB_PASSWORD'],
-            database=self.settings['INFLUX_DB_NAME']
-        )
+        self.influx_client = client
 
     def process_item(self, item, spider):
         measurement = None

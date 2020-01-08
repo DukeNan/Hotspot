@@ -18,6 +18,7 @@ class BaiduHot(Base):
     link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
     number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
+    is_max = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='是否是最大值')
 
 
 class WeiboHot(Base):
@@ -33,4 +34,5 @@ class WeiboHot(Base):
     link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
     number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
+    is_max = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='是否是最大值')
 
