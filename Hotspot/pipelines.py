@@ -5,10 +5,10 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-from sqlalchemy import func
+from sqlalchemy import func, text
 
 from Hotspot.items import BaiduItem, WeiboItem
-from dao import session
+from dao import engine
 from dao.iinflux import client
 from dao.models import BaiduHot, WeiboHot
 
@@ -16,39 +16,20 @@ from dao.models import BaiduHot, WeiboHot
 class HotspotPipeline(object):
 
     def __init__(self):
-        self.conn = session
         self.baidu = dict()
         self.weibo = dict()
 
     def process_item(self, item, spider):
         if isinstance(item, BaiduItem):
-            Model = BaiduHot
+            stmt = text('replace into baidu_hot set title=:title, `value`=:value, title_md5=:title_md5, \
+                        `timestamp`=:timestamp, link=:link, `source`=:source')
         else:
-            Model = WeiboHot
-        today_data = self.today_data(Model)
-        yesterday_data = self.yesterday_data(Model)
-        post_data = dict(item)
-        if item['title_md5'] in today_data:
-            return item
-        post_data['number'] = yesterday_data.get(item['title_md5'], 0) + 1
-        instance = Model(**post_data)
-        self.conn.add(instance)
+            stmt = text('replace into weibo_hot set title=:title, `value`=:value, title_md5=:title_md5, \
+                                    `timestamp`=:timestamp, link=:link, `source`=:source')
+        with engine.connect() as conn:
+            conn.execute(stmt, **item)
 
         return item
-
-    def close_spider(self, spider):
-        self.conn.commit()
-        self.conn.close()
-
-    def today_data(self, Model) -> set:
-        """return title_md5 set"""
-        queryset = self.conn.query(Model.title_md5).filter(func.date(Model.create_time) == func.current_date()).all()
-        return {query.title_md5 for query in queryset}
-
-    def yesterday_data(self, Model) -> dict:
-        queryset = self.conn.query(Model.title_md5, Model.number). \
-            filter(func.datediff(func.current_timestamp(), Model.create_time) == 1).all()
-        return {query.title_md5: query.number for query in queryset}
 
 
 class InfluxPipeline:

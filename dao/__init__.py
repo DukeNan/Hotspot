@@ -16,7 +16,7 @@ engine = create_engine(
     max_overflow=0,  # 超过连接池大小外最多创建连接
     pool_size=7,  # 连接池大小
     pool_timeout=30,  # 池中没有线程最多等待的时间，否则报错
-    pool_recycle=90  # 多久之后对线程池中的线程进行一次连接的回收（重置）
+    pool_recycle=280  # 多久之后对线程池中的线程进行一次连接的回收（重置）
 )
 
 session_maker = sessionmaker(bind=engine)
@@ -25,6 +25,7 @@ session = session_maker()
 Base = declarative_base()
 
 if __name__ == '__main__':
-    conn = session
-    query = conn.execute('select * from baidu_hot')
-    print(query.fetchall())
+    # conn = session
+    # query = conn.execute('select * from baidu_hot')
+    # print(query.fetchall())
+    ...

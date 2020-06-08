@@ -15,11 +15,8 @@ class BaiduHot(Base):
     timestamp = Column(BIGINT(13), nullable=False, comment='13位时间戳(爬取时间)')
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
                          comment='创建时间')
-    link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
+    link = Column(Text(collation='utf8mb4_bin'), comment='链接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
-    number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
-    is_max = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='是否是最大值')
-
 
 class WeiboHot(Base):
     __tablename__ = 'weibo_hot'
@@ -31,8 +28,5 @@ class WeiboHot(Base):
     timestamp = Column(BIGINT(13), nullable=False, comment='13位时间戳(爬取时间)')
     create_time = Column(DateTime, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
                          comment='创建时间')
-    link = Column(Text(collation='utf8mb4_bin'), comment='连接地址')
+    link = Column(Text(collation='utf8mb4_bin'), comment='链接地址')
     source = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='来源')
-    number = Column(TINYINT(2), nullable=False, server_default=text("'1'"), comment='出现天数')
-    is_max = Column(TINYINT(1), nullable=False, server_default=text("'0'"), comment='是否是最大值')
-
