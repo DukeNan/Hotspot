@@ -21,13 +21,17 @@ class HotspotPipeline(object):
 
     def process_item(self, item, spider):
         if isinstance(item, BaiduItem):
-            stmt = text('replace into baidu_hot set title=:title, `value`=:value, title_md5=:title_md5, \
-                        `timestamp`=:timestamp, link=:link, `source`=:source')
+            table_name = 'baidu_hot'
+        elif isinstance(item, WeiboItem):
+            table_name = 'weibo_hot'
         else:
-            stmt = text('replace into weibo_hot set title=:title, `value`=:value, title_md5=:title_md5, \
-                                    `timestamp`=:timestamp, link=:link, `source`=:source')
+            raise ValueError('数据格式错误')
+
+        sql = f"""insert into {table_name}(title, value, title_md5, timestamp, link) \
+                  select :title, :value, :title_md5, :timestamp, :link from dual \
+                  where not exists(select id from {table_name} where title_md5=:title_md5)"""
         with engine.connect() as conn:
-            conn.execute(stmt, **item)
+            conn.execute(text(sql), **item)
 
         return item
 
