@@ -108,7 +108,7 @@ class MessagePushPipeline(object):
             # 热度值
             hot_value = int(item['value'])
             #  大于5百万热值
-            if hot_value > 500000:
+            if hot_value > 5000000:
                 self.data_list.append(dict(item, value=hot_value))
         return item
 
