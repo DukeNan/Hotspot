@@ -67,6 +67,7 @@ ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
     'Hotspot.pipelines.HotspotPipeline': 300,
     'Hotspot.pipelines.InfluxPipeline': 310,
+    'Hotspot.pipelines.MessagePushPipeline': 320,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -103,3 +104,10 @@ DB_NAME = 'HotSpot'
 DB_USER = 'admin'
 DB_PASSWORD = '123456'
 DB_PORT = '3306'
+
+# WxPusher message push
+WxPusherConfig = {
+    'appToken': 'AT_XXXXXXX',
+    'topicIds': [1454],
+    'post_url': 'http://wxpusher.zjiecode.com/api/send/message'
+}
