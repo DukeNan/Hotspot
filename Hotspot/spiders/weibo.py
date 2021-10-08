@@ -54,6 +54,8 @@ class WeiBoHotspotSpider(scrapy.Spider):
         print('-' * 50, len(node_list))
         for node in node_list:
             value_str = node.xpath(".//td[@class='td-02']/span/text()").extract_first().strip()
+            if not value_str:
+                continue
             item = WeiboItem()
             item['title'] = node.xpath(".//td[@class='td-02']/a/text()").extract_first().strip()
             item['value'] = re.findall(r"\d+", value_str)[0]
