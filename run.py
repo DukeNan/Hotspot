@@ -1,17 +1,14 @@
-# from multiprocessing import Process
-# from scrapy import cmdline
-#
-# t1 = Process(target=cmdline.execute, args=('scrapy crawl baidu'.split(),))
-# t2 = Process(target=cmdline.execute, args=('scrapy crawl weibo'.split(),))
-#
-# t1.start()
-# t2.start()
-#
-# t1.join()
-# t2.start()
+from datetime import datetime
+from pathlib import Path
 
+log_path = Path(__file__).parent.joinpath('logs')
+if not log_path.exists():
+    log_path.mkdir(parents=True)
+
+now = datetime.now()
+log_filename = '{}.log'.format(now.strftime("%Y%m%d"))
 
 import os
 
-os.system('scrapy crawl baidu')
-os.system('scrapy crawl weibo')
+os.system(f'scrapy crawl baidu --logfile=./logs/{log_filename}')
+os.system(f'scrapy crawl weibo --logfile=./logs/{log_filename}')

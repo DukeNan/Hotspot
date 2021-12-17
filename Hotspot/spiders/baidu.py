@@ -40,4 +40,4 @@ class BaiduHotspotSpider(scrapy.Spider):
         return data_dict['data']['cards'][0]['content']
 
     def close(spider, reason):
-        print('+' * 50, '没想好要干点啥。。。')
+        pass
