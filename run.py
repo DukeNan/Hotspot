@@ -6,7 +6,7 @@ if not log_path.exists():
     log_path.mkdir(parents=True)
 
 now = datetime.now()
-log_filename = '{}.log'.format(now.strftime("%Y%m%d"))
+log_filename = 'spider_{}.log'.format(now.strftime("%Y%m%d"))
 
 import os
 
