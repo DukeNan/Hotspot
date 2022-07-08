@@ -14,5 +14,5 @@ fi
 cnt=$(ps -ef | grep  "proj_dir/$file" | grep -v "grep"| wc -l)
 
 if [ $cnt -eq 0 ];then
-    /home/shaun/.envs/spider_py3/bin/python3 $proj_dir/$file >> ./logs/${file}.${ts}.log 2>&1 &
+    /home/shaun/.envs/spider_py3/bin/python3 $proj_dir/$file >> $proj_dir/logs/${file}.${ts}.log 2>&1 &
 fi
