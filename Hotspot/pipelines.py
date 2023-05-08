@@ -79,7 +79,7 @@ class MessagePushPipeline(object):
         if self.db_session.query(PushMessage).filter_by(hash_code=index_data['title_md5']).first():
             return
         # 推送微信消息
-        content = '今日微博💥🍉：'
+        content = '今日微博爆点：'
         if len(data_list) > 1:
 
             for index, data in enumerate(data_list[:5]):
